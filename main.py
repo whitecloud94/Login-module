@@ -1,9 +1,18 @@
 from fastapi import FastAPI
 
+from core.config import settings
 
-app = FastAPI()
+from db.session import engine   #new
+from db.base_class import Base  #new
 
 
-@app.get("/")
-async def helloworld():
-    return {"msg": "Hello world!"}
+def create_tables():           #new
+	Base.metadata.create_all(bind=engine)
+
+	
+def start_application():
+	app = FastAPI(title=settings.PROJECT_NAME,version=settings.PROJECT_VER)
+	create_tables()       #new
+	return app
+
+app = start_application()
