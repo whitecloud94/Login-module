@@ -6,4 +6,7 @@ sqlalchemy
 psycopg2
 
 # environment settings
-dotenv
+python-dotenv
+
+# for hashing
+passlib[bcrypt]
