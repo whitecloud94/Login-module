@@ -10,6 +10,7 @@ def include_router(app):
 	app.include_router(api_router)
 
 def create_tables():
+	print("Create_tables")
 	Base.metadata.create_all(bind=engine)
 
 	
