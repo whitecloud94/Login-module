@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+
 # from typing import List
-from pydantic import EmailStr
 
 class Token(BaseModel):
     email: EmailStr
@@ -8,4 +8,3 @@ class Token(BaseModel):
 
 class TokenCreate(BaseModel):
     token : str
-    user_id : int

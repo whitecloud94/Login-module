@@ -23,5 +23,5 @@ class Email_Hasher():
         return email_context.verify(plain_code, hashed_code)
 
     @staticmethod
-    def get_hashed_code(email, date):
-        return email_context.hash(email+date)
+    def get_hashed_code(data):
+        return email_context.hash(data)
