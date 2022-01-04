@@ -1,8 +1,12 @@
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from datetime import datetime
-from db.models.users import Users
-from schemas.users import UserCreate
 
+from starlette.status import HTTP_404_NOT_FOUND
+from db.models.users import Users
+from db.models.token import Token
+from schemas.users import UserCreate
+from schemas.email import EmailSchema
 from core.hashing import Hasher,Email_Hasher
 
 def create_new_user(user:UserCreate, db:Session):
@@ -18,6 +22,17 @@ def create_new_user(user:UserCreate, db:Session):
     return user
 
 
-def get_user_by_email(email:str, db:Session):
+def get_user_by_email(email:EmailSchema, db:Session):
     user = db.query(Users).filter(Users.email == email).first()
+    return user
+
+def update_user_activation(id:int, db:Session):
+    user = db.query(Users).filter(Users.id == id).first()
+    token = db.query(Token).filter(Token.user_id == id).first()
+    token.expired = True
+    user.is_active = False
+    db.add(token)
+    db.add(user)
+    db.commit()
+    db.refresh(user)
     return user

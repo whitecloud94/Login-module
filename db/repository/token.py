@@ -16,3 +16,9 @@ def create_token(user:Users, db:Session):
     db.commit()
     db.refresh(token)
     return token
+
+
+def get_token_by_user_id(id:int, db:Session):
+    user_id = db.query(Users.id).filter(Users.id == id).first()
+    token = db.query(Token).filter(Token.user_id == user_id).first()
+    return token

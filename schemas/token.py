@@ -8,3 +8,4 @@ class Token(BaseModel):
 
 class TokenCreate(BaseModel):
     token : str
+    
