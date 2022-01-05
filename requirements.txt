@@ -1,12 +1,19 @@
 # for fastapi include uvicorn, 
 fastapi[all]
 
+# for Email validation
+fastapi-mail
+
 # database
 sqlalchemy
 psycopg2
 
 # environment settings
 python-dotenv
+python-multipart
 
 # for hashing
 passlib[bcrypt]
+
+# for JWT
+python-jose
