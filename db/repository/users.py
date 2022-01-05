@@ -6,17 +6,6 @@ from schemas.users import UserCreate
 from schemas.email import EmailSchema
 from core.hashing import Hasher
 
-def create_new_user(user:UserCreate, db:Session):
-    user = Users(
-    username = user.username,
-    email=user.email,
-    hashed_password=Hasher.get_hashed_password(user.password),
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-
-    return user
 
 class get_user():
     
@@ -30,11 +19,25 @@ class get_user():
         user = db.query(Users).filter(Users.id == id).first()
         return user
 
+
+def create_new_user(user:UserCreate, db:Session):
+    user = Users(
+    username = user.username,
+    email=user.email,
+    hashed_password=Hasher.get_hashed_password(user.password),
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    return user
+
+
 def update_user_activation(id:int, db:Session):
     user = db.query(Users).filter(Users.id == id).first()
     token = db.query(Token).filter(Token.user_id == id).first()
     token.expired = True
-    user.is_active = False
+    user.is_active = True
     db.add(token)
     db.add(user)
     db.commit()

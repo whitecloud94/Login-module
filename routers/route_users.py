@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends
 from datetime import datetime
+from fastapi import HTTPException, status
 
 from sqlalchemy.orm import Session
+from db.repository.token import token_verify
 
 from db.session import get_db
 
@@ -18,7 +20,9 @@ async def create_user(user: UserCreate, db:Session = Depends(get_db)):
     return user
 
 @router.post("/activation",)
-async def user_activation(id: int, token:str,
-                         active: str, db:Session = Depends(get_db)):
-    is_active = update_user_activation(id, db)
+async def user_activation(id: int, db:Session = Depends(get_db)):
+    if token_verify:
+        is_active = update_user_activation(id, db)
+    else:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
     return is_active
