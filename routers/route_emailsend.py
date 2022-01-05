@@ -8,16 +8,14 @@ from fastapi import (APIRouter,
 from starlette.responses import JSONResponse
 from fastapi_mail import FastMail, MessageSchema
 from sqlalchemy.orm import Session
-from starlette.status import HTTP_404_NOT_FOUND
 
 from core.config import mail_conf
 from schemas.email import EmailSchema
 
 from db.session import get_db
-from db.models.users import Users
-from db.models.token import Token
+
 from db.repository.users import get_user
-from db.repository.token import get_token_by_user_id, token_verify
+from db.repository.token import get_token_by_user_id
 
 router = APIRouter()
 
