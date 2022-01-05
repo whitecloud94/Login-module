@@ -1,3 +1,4 @@
+from datetime import datetime
 from sqlalchemy.orm import Session
 from db.models.users import Users
 from core.hashing import Email_Hasher
@@ -19,6 +20,13 @@ def create_token(user:Users, db:Session):
 
 
 def get_token_by_user_id(id:int, db:Session):
-    user_id = db.query(Users.id).filter(Users.id == id).first()
-    token = db.query(Token).filter(Token.user_id == user_id).first()
+    token = db.query(Token).filter(Token.user_id == id).first()
     return token
+
+
+def token_verify(email: str, token: str, is_active:bool, create_time:datetime):
+    is_active = str(is_active)
+    create_time = str(create_time)
+    plain_code = email+is_active+create_time
+    verify = Email_Hasher.verify_code(plain_code, token)
+    return verify

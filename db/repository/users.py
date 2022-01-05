@@ -21,10 +21,17 @@ def create_new_user(user:UserCreate, db:Session):
 
     return user
 
+class get_user():
+    
+    @staticmethod
+    def get_user_by_email(email:EmailSchema, db:Session):
+        user = db.query(Users).filter(Users.email == email).first()
+        return user
 
-def get_user_by_email(email:EmailSchema, db:Session):
-    user = db.query(Users).filter(Users.email == email).first()
-    return user
+    @staticmethod
+    def get_user_by_id(id:int, db:Session):
+        user = db.query(Users).filter(Users.id == id).first()
+        return user
 
 def update_user_activation(id:int, db:Session):
     user = db.query(Users).filter(Users.id == id).first()
