@@ -8,4 +8,4 @@ api_router = APIRouter()
 
 api_router.include_router(route_users.router, prefix="/users", tags=["users"])
 api_router.include_router(route_emailsend.router, prefix="/emails", tags=["email"])
-api_router.include_router(route_token.router, prefix="/createToken", tags=["token"])
+api_router.include_router(route_token.router, prefix="/token", tags=["token"])

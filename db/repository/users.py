@@ -1,13 +1,10 @@
-from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from datetime import datetime
 
-from starlette.status import HTTP_404_NOT_FOUND
 from db.models.users import Users
 from db.models.token import Token
 from schemas.users import UserCreate
 from schemas.email import EmailSchema
-from core.hashing import Hasher,Email_Hasher
+from core.hashing import Hasher
 
 def create_new_user(user:UserCreate, db:Session):
     user = Users(

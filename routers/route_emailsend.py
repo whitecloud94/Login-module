@@ -27,7 +27,7 @@ async def send_in_background(background_tasks: BackgroundTasks, email: EmailSche
     user_email = email.email[0]
     user = get_user.get_user_by_email(user_email, db)
     if not user:
-        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="email not found.")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="email not found.")
     token = get_token_by_user_id(id=user.id, db=db)
     token = token.token
 
@@ -41,19 +41,4 @@ async def send_in_background(background_tasks: BackgroundTasks, email: EmailSche
 
     background_tasks.add_task(fm.send_message,message)
     
-    return JSONResponse(status_code=200, content={"message": "email has been sent successfully."})
-
-
-
-
-@router.get("/confirmation_token")
-async def user_confirmation(token:str, db: Session=Depends(get_db)):
-    token = db.query(Token).filter(Token.token == token).first()
-    try:
-        user = get_user.get_user_by_id(token.user_id, db)
-        verify = token_verify(email=user.email, is_active=user.is_active,
-                            create_time=user.created_at, token=token.token)
-    except AttributeError:
-        return {"msg" : """expiraion token or wrong token."""}
-    
-    return verify
+    return JSONResponse(status_code=status.HTTP_200_OK, content={"message": "email has been sent successfully."})
