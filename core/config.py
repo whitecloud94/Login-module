@@ -23,7 +23,7 @@ class settings:
     SECRET_KEY : str = os.getenv("SECRET_KEY")
     ALGORITHM : str = os.getenv("ALGORITHM")
     EMAIL_TOKEN_EXPIRE_TIME : str = os.getenv("EMAIL_TOKEN_EXPIRE_TIME")
-    ACCESS_TOKEN_EXPIRE_TIME : str = os.getenv("ACCESS_TOKEN_EXPIRE_TIME")
+    ACCESS_TOKEN_EXPIRE_TIME = 30
     MAIL_USERNAME : str = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD : str = os.getenv("MAIL_PASSWORD")
     MAIL_FROM : str = "ajemfld1@gmail.com"

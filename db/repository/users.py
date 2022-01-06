@@ -19,6 +19,11 @@ class get_user():
         user = db.query(Users).filter(Users.id == id).first()
         return user
 
+    @staticmethod
+    def get_user(username: str, db:Session):
+        user = db.query(Users).filter(Users.email == username).first()
+        return user
+
 
 def create_new_user(user:UserCreate, db:Session):
     user = Users(
