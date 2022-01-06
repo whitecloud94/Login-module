@@ -28,7 +28,7 @@ def authenticate_user(username: str, password: str,db: Session):
 
 @router.post("/token", response_model=AccessToken)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),db: Session= Depends(get_db)):
-    user = authenticate_user(form_data.username, form_data.password, db)
+    user = authenticate_user(form_data.username, form_data.password, db) # form_data의 username은, DB의 username 컬럼으로 제한하는것이 아님.
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Wrong username or password",
